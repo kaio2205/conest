@@ -1,0 +1,23 @@
+{
+  "name": "conest",
+  "version": "1.0.0",
+  "description": "sistema para gestao de estoque",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaio2205/conest.git"
+  },
+  "author": "Kaio eduardo de Carvalho de Santos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaio2205/conest/issues"
+  },
+  "homepage": "https://github.com/kaio2205/conest#readme",
+  "devDependencies": {
+    "electron": "^31.0.1"
+  }
+}
