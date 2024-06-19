@@ -19,5 +19,8 @@
   "homepage": "https://github.com/kaio2205/conest#readme",
   "devDependencies": {
     "electron": "^31.0.1"
+  },
+  "dependencies": {
+    "mongoose": "^8.4.1"
   }
 }

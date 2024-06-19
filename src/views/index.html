@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- evitar ataques de Cross Site Scripting (injeção de dados)-->
+     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
     <title>Conest - Controle de estoque</title>
+
+ <!-- bootstrep por ultimo  -->
+ <link rel="stylesheet" href="../public/css/bootstrap.rtl.min.css"> 
+ <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
-   <h1>CONEST</h1>
-   <script src="renderer.js"></script> 
+   
+   <div class="container">
+    <h1>Controle de estoque</h1>
+    <button class="btn  btn- btn-outline-primary" onclick="sobre()">Sobre</button>
+    </div>
+    <!-- rodapé -->
+    <footer>
+     <p id="dataAtual"></p>
+    </footer>
+    <script src="../public/js/bootstrap.min.js"></script>
+    <script src="renderer.js"></script> 
 </body>
 </html>

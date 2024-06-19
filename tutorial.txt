@@ -1,0 +1,23 @@
+
+ligaçao do banco de dados mongo db com  o electron
+
+PASSO 1 - ter um servidor de banco de dados com electron
+-Localhost (instalado com o windows) (desenvolvimento)
+-fisico (baseado no linux) em uma rede local (switch) (desktop)
+-nuvem (atlas (free 540mb AWS)) (netflix e-comerce e etc)
+
+PASSO2 - instalar o mongoose é um frameWork para trabalhar com o mongodb
+
+
+PASSO3 - criar um arquivo database.js na raiz e configurar a conexao com o banco de dados 
+
+PASSO4 - importar no main os metodos para conectar e desconectar o banco de dados 
+
+PASSO5 - na janela principal, deixar o objeto win publico (gerenciar banco)
+
+PASSO6 - criar uma funçao para verificar o status de conexao  (criar apos ultima linha) este
+passo poderia estar junto com o app.wheyReady(), por uma questao didatica e de entendimento
+
+PASSO7 -  dentro do app.wheyReady() executar a funçao
+
+PASSO8 -  dentro do app.wheyReady() criar um metodo  desconectar e conectar o banco de dados 
