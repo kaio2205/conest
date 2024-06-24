@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- evitar ataques de Cross Site Scripting (injeção de dados)-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+    <link rel="stylesheet" href="../public/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+
+
+    <title>clientes</title>
+</head>
+
+<body>
+    <div class="container">
+
+    <h1>Clientes</h1>
+        <br>
+        <div class="container">
+            <form class="row g-3" id="frmCliente">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="inputSearch" maxlength="30" spellcheck="false">
+                </div>
+                <hr class="border border-primary border-1 opacity-75">
+            <!-- id mongodb -->
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" id="btn_read">buscar</button>
+             </div>
+
+             <br>
+            <div class="col-md-6">
+             <input type="text" class="form-control" id="inputId" placeholder="id">
+        </div>
+
+        
+            <div class="col-md-8">
+                <label for="inputName" class=" form-label">nome</label>
+
+             <input type="text" class="form-control" id="inputName" required maxlength="30"
+             spellcheck="false">
+
+
+            </div>
+
+
+             <div class="col-md-4">
+                <label for="inptfone" class=" form-label">telefone do cliente</label>
+                <input type="tel" class="form-control" id="inputName" required maxlength="30"
+             spellcheck="false">
+             </div>
+
+
+             <div class="col-md-12">
+                <label for="inputadrees" class=" form-label">email
+                </label>
+                <input type="email" class="form-control" id="inputadrees"  maxlength="30"
+             spellcheck="false">
+
+             </div>
+        
+             <!-- botoes -->
+             <div class="col-12">
+                <button type="button" class="btn btn-success">adicionar</button>
+                <button type="submit" class="btn btn-warning" id="btnCreate"> editar</button>
+                <button type="button" class="btn btn-danger">excluir</button>
+                <button type="reset" id="btnReset" ></button>
+
+
+            </div>
+
+             </form>
+    </div>
+
+    <script src="../public/js/bootstrap.min.js"></script>
+</body>
+
+</html>
