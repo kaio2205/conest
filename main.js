@@ -21,88 +21,82 @@ const createWindow = () => {
 let about 
 
 
-let clientes
+
 const clientWindow= () => {
   // se a janela about não estiver aberta(bug 1)
-  if (!clientes) {
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
     client = new BrowserWindow({
-      width: 360, //largura
-      height: 220,  //altura
+      width: 800, //largura
+      height: 600,  //altura
       resizable: false, //evitar o redimensionamento
       autoHideMenuBar: true, //esconder menu
-      icon: './src/public/img/' //ícone
+      parent: father,
+      modal: true
+      
     })
   }
 
-  client.loadFile('./src/views/cliente.html')
- 
- 
-  client.on('closed', () => {
-    client = null
-  })
+  client.loadFile('./src/views/clientes.html')
+ }
 
-}
 
-let produtos
 const produtoWindow= () => {
   
-  if (!produtos) {
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
     produto = new BrowserWindow({
-      width: 360, 
-      height: 220, 
-      resizable: false, 
-      autoHideMenuBar: true, 
-      icon: './src/public/img/' 
+      width: 800, //largura
+      height: 600,  //altura
+      resizable: false, //evitar o redimensionamento
+      autoHideMenuBar: true, //esconder menu
+      parent: father,
+      modal: true
+      
     })
   }
 
   produto.loadFile("./src/views/produtos.html")
-
-  produtos.on('closed', () => {
-    produtos = null
-  })
-
 }
 
-const fornecWindow = () => {
 
-  if (!fornecedor) {
+
+const fornecWindow = () => {
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
     fornec = new BrowserWindow({
-      width: 360, 
-      height: 220,  
-      resizable: false, 
-      autoHideMenuBar: true, 
-      icon: './src/public/img/' 
+      width: 800, //largura
+      height: 600,  //altura
+      resizable: false, //evitar o redimensionamento
+      autoHideMenuBar: true, //esconder menu
+      parent: father,
+      modal: true
+      
     })
   }
 
-  fornecedor.loadFile('./src/views/fornecedor.html')
+  fornec.loadFile('./src/views/fornecedor.html')
   
-  forneceedor.on('closed', () => {
-    fornec = null
-  })
-
-}
+  }
 
 const aboutWindow = () => {
   
-  if (!about) {
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
     about = new BrowserWindow({
-      width: 360, 
-      height: 300,  
-      resizable: false, 
-      autoHideMenuBar: true, 
-      icon: './src/public/img/about.png' 
+      width: 200, //largura
+      height: 400,  //altura
+      resizable: false, //evitar o redimensionamento
+      autoHideMenuBar: true, //esconder menu
+      parent: father,
+      modal: true
+      
     })
   }
 
   about.loadFile('./src/views/sobre.html')
   
-  about.on('closed', () => {
-    about = null
-  })
-
-}
+ }
 
 
 app.whenReady().then(() => {
