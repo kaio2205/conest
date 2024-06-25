@@ -10,8 +10,6 @@ const createWindow = () => {
     height: 600,
     icon: './src/public/img/',
     webPreferences: {
-      parent: win,       // obtem a relaçao parent
-      modal: true, // foco na janela 
       preload: path.join(__dirname, 'preload.js')
     }
   })
@@ -20,99 +18,102 @@ const createWindow = () => {
   win.loadFile('./src/views/index.html')
 }
 
+let about 
 
 
-
-const clientWindow = () => {
+let clientes
+const clientWindow= () => {
   // se a janela about não estiver aberta(bug 1)
-  let clientes
-  clientes = new BrowserWindow({
-    width: 800, //largura
-    height: 600,  //altura
-    resizable: false, //evitar o redimensionamento
-    autoHideMenuBar: true, //esconder menu
-    parent: clientes,       // obtem a relaçao parent
-    modal: true, // foco na janela
-    icon: './src/public/img/' //ícone
+  if (!clientes) {
+    client = new BrowserWindow({
+      width: 360, //largura
+      height: 220,  //altura
+      resizable: false, //evitar o redimensionamento
+      autoHideMenuBar: true, //esconder menu
+      icon: './src/public/img/' //ícone
+    })
+  }
+
+  client.loadFile('./src/views/cliente.html')
+ 
+ 
+  client.on('closed', () => {
+    client = null
   })
-
-
-  clientes.loadFile('./src/views/clientes.html')
-
-
-
 
 }
 
-
-const produtoWindow = () => {
-  let produto
-  produto = new BrowserWindow({
-    width: 800,
-    height: 600,
-    resizable: false,
-    autoHideMenuBar: true,
-    parent: produto,       // obtem a relaçao parent
-    modal: true, // foco na janela
-
-  })
-
+let produtos
+const produtoWindow= () => {
+  
+  if (!produtos) {
+    produto = new BrowserWindow({
+      width: 360, 
+      height: 220, 
+      resizable: false, 
+      autoHideMenuBar: true, 
+      icon: './src/public/img/' 
+    })
+  }
 
   produto.loadFile("./src/views/produtos.html")
 
-}
-
-
-
-const fornecWindow = () => {
-  let fornec
-  fornec = new BrowserWindow({
-    width: 600,
-    height: 800,
-    resizable: false,
-    autoHideMenuBar: true,
-    parent: fornec,       // obtem a relaçao parent
-    modal: true, // foco na janela
-   
+  produtos.on('closed', () => {
+    produtos = null
   })
 
+}
 
-  fornec.loadFile('./src/views/fornecedor.html')
+const fornecWindow = () => {
 
+  if (!fornecedor) {
+    fornec = new BrowserWindow({
+      width: 360, 
+      height: 220,  
+      resizable: false, 
+      autoHideMenuBar: true, 
+      icon: './src/public/img/' 
+    })
+  }
 
+  fornecedor.loadFile('./src/views/fornecedor.html')
+  
+  forneceedor.on('closed', () => {
+    fornec = null
+  })
 
 }
 
 const aboutWindow = () => {
-
+  
   if (!about) {
     about = new BrowserWindow({
-      width: 360,
-      height: 300,
-      resizable: false,
-      autoHideMenuBar: true,
-      parent: about,       // obtem a relaçao parent
-      modal: true, // foco na janela
-      icon: './src/public/img/about.png'
+      width: 360, 
+      height: 300,  
+      resizable: false, 
+      autoHideMenuBar: true, 
+      icon: './src/public/img/about.png' 
     })
   }
 
   about.loadFile('./src/views/sobre.html')
-
-
+  
+  about.on('closed', () => {
+    about = null
+  })
 
 }
 
 
 app.whenReady().then(() => {
 
-
+  
   ipcMain.on('send-message', (event, message) => {
     console.log(`<<< ${message}`)
     statusConexao()
   })
 
-
+  
   app.on('before-quit', async () => {
     await desconectar()
   })
@@ -212,7 +213,7 @@ ipcMain.on('open-produto', () => {
 const statusConexao = async () => {
   try {
     await conectar()
-    win.webContents.send('db-status', "banco de dados conectado")
+    win.webContents.send('db-status',"banco de dados conectado")
   } catch (error) {
     win.webContents.send('db-status', `eroo de conexao ${error.message}`)
   }
