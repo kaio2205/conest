@@ -65,8 +65,8 @@ const fornecWindow = () => {
   const father = BrowserWindow.getFocusedWindow()
   if (father) {
     fornec = new BrowserWindow({
-      width: 800, //largura
-      height: 600,  //altura
+      width: 1280, //largura
+      height: 720,  //altura
       resizable: false, //evitar o redimensionamento
       autoHideMenuBar: true, //esconder menu
       parent: father,
@@ -84,8 +84,8 @@ const aboutWindow = () => {
   const father = BrowserWindow.getFocusedWindow()
   if (father) {
     about = new BrowserWindow({
-      width: 200, //largura
-      height: 400,  //altura
+      width:  400, //largura
+      height: 290,  //altura
       resizable: false, //evitar o redimensionamento
       autoHideMenuBar: true, //esconder menu
       parent: father,

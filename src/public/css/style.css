@@ -39,3 +39,27 @@ footer p {
   margin: 10px 0px 10px 10px;
 }
 
+#btnFechar {
+  width: 60px;
+  height: 25px;
+  margin: 7px 10px 0;
+  font-size: 10pt;
+  right: 0;
+  position: fixed;
+}
+
+#footerAbout{
+  position: fixed;
+  bottom: 0;
+  background-color: blue;
+}
+
+#btnCep{
+
+margin-top: 30px;
+}
+
+
+#forn h1{
+  background-color: #fc3003;
+}
