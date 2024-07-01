@@ -109,8 +109,8 @@ const aboutWindow = () => {
   const father = BrowserWindow.getFocusedWindow()
   if (father) {
     about = new BrowserWindow({
-      width:  400, //largura
-      height: 290,  //altura
+      width:  360, //largura
+      height: 220,  //altura
       resizable: false, //evitar o redimensionamento
       autoHideMenuBar: true, //esconder menu
       parent: father,

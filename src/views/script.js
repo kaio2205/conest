@@ -8,9 +8,9 @@ function buscarCep() {
             return response.json()
         })
         .then((dados) => { //manipular os dados obtidos
-            frmFornecedor.inputlogradouro.value = `${dados.logradouro}`
-            frmFornecedor.inputbairro.value = `${dados.bairro}`
-            frmFornecedor.inputcidade.value = `${dados.localidade}`
+            frmFornecedor.inputLogradouro.value = `${dados.logradouro}`
+            frmFornecedor.inputBairro.value = `${dados.bairro}`
+            frmFornecedor.inputCidade.value = `${dados.localidade}`
             frmFornecedor.uf.value = `${dados.uf}`
         })
         .catch((error) => {
