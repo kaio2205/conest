@@ -9,4 +9,8 @@ function produto() {
     api.openproduto()
 }
 
+function relatorio(){
+    api.openrelatorio()
+}
+
 

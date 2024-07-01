@@ -79,6 +79,31 @@ const fornecWindow = () => {
   
   }
 
+
+  const relatorioWindow = () => {
+    const father = BrowserWindow.getFocusedWindow()
+    if (father) {
+      relatorio = new BrowserWindow({
+        width: 1280, //largura
+        height: 720,  //altura
+        resizable: false, //evitar o redimensionamento
+        autoHideMenuBar: true, //esconder menu
+        parent: father,
+        modal: true
+        
+      })
+    }
+  
+    relatorio.loadFile('./src/views/relatorio.html')
+    
+    }
+
+
+
+
+
+
+
 const aboutWindow = () => {
   
   const father = BrowserWindow.getFocusedWindow()
@@ -144,6 +169,11 @@ const template = [
         click: () => produtoWindow(),
       },
       {
+        label: 'Relatorio',
+        click: ()=> relatorioWindow(),
+      },
+
+      {
         label: 'Sair',
         click: () => app.quit(),
         accelerator: 'Alt+F4'
@@ -204,6 +234,13 @@ ipcMain.on('open-fornec', () => {
 ipcMain.on('open-produto', () => {
   produtoWindow()
 })
+
+ipcMain.on('open-relatorio', () => {
+  relatorioWindow()
+})
+
+
+
 const statusConexao = async () => {
   try {
     await conectar()
