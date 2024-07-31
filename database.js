@@ -4,7 +4,7 @@
 const mongoose = require('mongoose')
 
 // definir o banco de dados (copiar a string do compass)
-let url = "mongodb+srv://admin:Senac123@clusterconest.ro2k8z5.mongodb.net/"
+let url = "mongodb+srv://admin:Senac123@clusterconest.ro2k8z5.mongodb.net/dbconest"
 
 
 // conectar 

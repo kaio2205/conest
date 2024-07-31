@@ -20,4 +20,19 @@ passo poderia estar junto com o app.wheyReady(), por uma questao didatica e de e
 
 PASSO7 -  dentro do app.wheyReady() executar a funçao
 
-PASSO8 -  dentro do app.wheyReady() criar um metodo  desconectar e conectar o banco de dados 
+PASSO8 -  dentro do app.wheyReady() criar um metodo  desconectar e conectar o banco de dados
+
+PASSO9 - usar preload.js e IPC (IPCrenderer e ipcmain) para criar uama regra permita modificar 
+o icone de banco de dados 
+
+
+PASSO10 - criar pasta models 
+
+PASSO11 - criar modelo para pasta clientes 
+    -Clientes.js (com letra maiuscula)
+
+PASSO12 - importar o schema no main.js
+
+
+CRUD Creat :
+seguir o slide fornecido 

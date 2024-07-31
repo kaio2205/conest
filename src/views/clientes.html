@@ -24,6 +24,10 @@
                 <button type="button" class="btn btn-primary" id="btnRead">Buscar</button>
             </div>
             <hr class="border border-primary border-1 opacity-75">
+            <div class="col-md-8">
+                <label for="inputName" class="form-label">id</label>
+                <input type="text" class="form-control" id="inputName" maxlength="50" spellcheck="false" >
+            </div>
             <!-- id MongoDB -->
             <div class="col-md-6">
                 <input type="text" class="form-control" id="inputId" placeholder="id">
@@ -32,17 +36,17 @@
             <!-- Nome do cliente -->
             <div class="col-md-8">
                 <label for="inputName" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="inputName" maxlength="50" spellcheck="false" required>
+                <input type="text" class="form-control" id="inputNameClient" maxlength="50" spellcheck="false" required>
             </div>
             <!-- Telefone do cliente -->
             <div class="col-md-4">
                 <label for="inputPhone" class="form-label">Telefone</label>
-                <input type="tel" class="form-control" id="inputPhone" maxlength="15" spellcheck="false" required>
+                <input type="tel" class="form-control" id="inputPhoneClient" maxlength="15" spellcheck="false" required>
             </div>
             <!-- Email do cliente -->
             <div class="col-12">
                 <label for="inputAddress" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="inputAddress" maxlength="50" spellcheck="false">
+                <input type="email" class="form-control" id="inputEmailClient" maxlength="50" spellcheck="false">
                 <br>
             </div>
             <!-- Botões -->
@@ -55,6 +59,10 @@
         </form>
     </div>
     <script src="../public/js/bootstrap.min.js"></script>
+    <script src="./cliente.js"></script>
     
 </body>
+
+
+
 </html>

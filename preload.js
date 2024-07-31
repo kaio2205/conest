@@ -6,13 +6,12 @@ contextBridge.exposeInMainWorld('api', {
     openproduto: () => ipcRenderer.send('open-produto'),
     openfornec: () => ipcRenderer.send('open-fornec'),
     openrelatorio: () => ipcRenderer.send('open-relatorio'),
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-
+    dbMessage: (message) => ipcRenderer.on('db-message',message),
+    newClient: (cliente) => ipcRenderer.send('new-client',cliente)
 })
 
 
-
+ipcRenderer.send('db-conect')
 
 
 

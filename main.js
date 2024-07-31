@@ -3,12 +3,15 @@ const { app, BrowserWindow } = require('electron/main')
 const path = require('node:path')
 const { conectar, desconectar } = require('./database.js')
 
+// importaçao do Schema 
+const ClientModel = require('./src/models/Cliente.js')
+
 let win
 const createWindow = () => {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: './src/public/img/',
+    icon: './src/public/img/produtos.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
@@ -32,6 +35,9 @@ const clientWindow= () => {
       resizable: false, //evitar o redimensionamento
       autoHideMenuBar: true, //esconder menu
       parent: father,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      },
       modal: true
       
     })
@@ -88,6 +94,7 @@ const fornecWindow = () => {
         height: 720,  //altura
         resizable: false, //evitar o redimensionamento
         autoHideMenuBar: true, //esconder menu
+        icon:"",
         parent: father,
         modal: true
         
@@ -113,6 +120,7 @@ const aboutWindow = () => {
       height: 220,  //altura
       resizable: false, //evitar o redimensionamento
       autoHideMenuBar: true, //esconder menu
+      icon:'./src/public/img/produtos.png',
       parent: father,
       modal: true
       
@@ -127,10 +135,16 @@ const aboutWindow = () => {
 app.whenReady().then(() => {
 
   
-  ipcMain.on('send-message', (event, message) => {
+  ipcMain.on('send-message', async (event, message) => {
     console.log(`<<< ${message}`)
     statusConexao()
+    event.replay('db-message',"conectado")
   })
+
+  ipcMain.on('db-conect', async (event, message) => {
+    await conectar()
+    event.reply('db-message', "conectado")
+})
 
   
   app.on('before-quit', async () => {
@@ -218,6 +232,49 @@ const template = [
     ]
   }
 ]
+
+// CRUD READ>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+ipcMain.on('new-client',async(event,cliente)=>{
+  console.log(cliente)  // teste do passo 2 do slide
+try {
+  const NovoCliente = new clienteModel({
+    nomeCliente: cliente.nomeCli,
+    foneCliente: cliente.foneCli,
+    emailCliente: cliente.emailCli
+  })
+  await NovoCliente.save() //save()-moongoose
+} catch (error) {
+  
+}
+
+})
+
+
+// passo 3 cadastrar no banco de dados 
+
+
+
+
+// CRUD UPDATE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// CRUD DELET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
 
 ipcMain.on('open-about', () => {
   aboutWindow()
