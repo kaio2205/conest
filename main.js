@@ -1,10 +1,16 @@
-const { ipcMain, Menu, shell } = require('electron')
+const { ipcMain, Menu, Shell,dialog } = require('electron')
 const { app, BrowserWindow } = require('electron/main')
 const path = require('node:path')
-const { conectar, desconectar } = require('./database.js')
+const { dbStatus, desconectar } = require('./database.js')
 
+
+
+let dbCon = null
 // importaçao do Schema 
 const ClientModel = require('./src/models/Cliente.js')
+const fornecedorModal=require("./src/models/Fornecedor.js")
+const { ok } = require('node:assert')
+const { ClientRequest } = require('node:http')
 
 let win
 const createWindow = () => {
@@ -135,19 +141,12 @@ const aboutWindow = () => {
 app.whenReady().then(() => {
 
   
-  ipcMain.on('send-message', async (event, message) => {
-    console.log(`<<< ${message}`)
-    statusConexao()
-    event.replay('db-message',"conectado")
-  })
-
   ipcMain.on('db-conect', async (event, message) => {
-    await conectar()
+    dbCon = await dbStatus()
     event.reply('db-message', "conectado")
 })
 
-  
-  app.on('before-quit', async () => {
+app.on('before-quit', async () => {
     await desconectar()
   })
 
@@ -235,17 +234,24 @@ const template = [
 
 // CRUD READ>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-ipcMain.on('new-client',async(event,cliente)=>{
+ipcMain.on('new-client', async(event,cliente)=>{
   console.log(cliente)  // teste do passo 2 do slide
 try {
-  const NovoCliente = new clienteModel({
+  const novoCliente = new ClientModel({
     nomeCliente: cliente.nomeCli,
     foneCliente: cliente.foneCli,
     emailCliente: cliente.emailCli
   })
-  await NovoCliente.save() //save()-moongoose
+  await novoCliente.save() //save() - moongoose
+        dialog.showMessageBox({
+            type: 'info',
+            title: 'Aviso',
+            message: "Cliente cadastrado com sucesso!",
+            buttons: ['OK']
+        })
+ 
 } catch (error) {
-  
+  console.log(error)
 }
 
 })

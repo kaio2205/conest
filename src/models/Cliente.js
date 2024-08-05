@@ -3,18 +3,22 @@
  * modelo de dados (model) Cliente
  **/ 
 
-const {model,Schema} = require ('mongoose')
+/**
+ * Modelo de dados (model) Clientes
+ */
+
+const { model, Schema } = require('mongoose')
 
 const clienteSchema = new Schema({
-    nomeCliente:{
+    nomeCliente: {
         type: String
     },
-    foneCliente:{
-        type:String
+    foneCliente: {
+        type: String
     },
-    emailCliente:{
-        type:String
+    emailCliente: {
+        type: String
     }
 })
 
-module.exports = model('Cliente',clienteSchema)
+module.exports = model('Cliente', clienteSchema)

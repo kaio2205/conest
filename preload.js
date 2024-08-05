@@ -1,4 +1,8 @@
 const { ipcRenderer, contextBridge } = require('electron')
+const Fornecedor = require('./src/models/Fornecedor')
+
+
+ipcRenderer.send('db-conect')
 
 // stt de conexão (verificar se o bd está conectado)
 contextBridge.exposeInMainWorld('api', {
@@ -7,11 +11,12 @@ contextBridge.exposeInMainWorld('api', {
     openfornec: () => ipcRenderer.send('open-fornec'),
     openrelatorio: () => ipcRenderer.send('open-relatorio'),
     dbMessage: (message) => ipcRenderer.on('db-message',message),
-    newClient: (cliente) => ipcRenderer.send('new-client',cliente)
+    newClient: (cliente) => ipcRenderer.send('new-client',cliente),
+    newFornecedor: (fornecedor)=>ipcRenderer.send('new-Fornecedor',fornecedor)
 })
 
 
-ipcRenderer.send('db-conect')
+
 
 
 
