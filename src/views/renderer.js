@@ -1,4 +1,3 @@
-
 function client() {
     api.openclient()
 }

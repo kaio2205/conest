@@ -3,6 +3,26 @@
 
 
 
+// mudar propriedades do documentos para iniciar (UX)
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('inputSearch').focus()
+    btnCreat.disable = true
+    btnUpdate.disable = true
+    btnDelete.disable = true
+})
+
+
+// Alterar comportamento do ENTER (relacionar ao botao de busca)
+
+document.getElementById('frmCliente').addEventListener("keydown", (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault()
+        // executar a funcao associada ao botao buscar
+        buscarCliente()
+    }
+})
 
 
 
@@ -31,12 +51,12 @@ formCliente.addEventListener('submit', async (event) => {
         foneCli: foneCliente.value,
         emailCli: emailCliente.value
 
-        
+
     }
 
     api.newClient(cliente)
-    
-// LIMPPAR OS DADOS DO FORM  APOS ENVIO
+
+    // LIMPPAR OS DADOS DO FORM  APOS ENVIO
     formCliente.reset()
 
 })
@@ -59,7 +79,49 @@ formCliente.addEventListener('submit', async (event) => {
 
 // CRUD READ>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+// array vetor usado na renderizaçao dis dados do cliente  
+let arrayCliente = []
 
+// funçao que vai enviar ao main um pedido  de busca de dados  de um cliente pelo nome 
+function buscarCliente() {
+    let nomeCliente = document.getElementById('inputSearch').value.trim()
+    if (nomeCliente === "") {
+
+        // validar canoi obrigatorio 
+        api.infoSearchDialogDialog()
+    } else {
+        // enviar o pedido de busca com o nome do cliente 
+        api.searchClient(nomeCliente)
+    }
+
+    // FOCO  no campo de busca (UX)
+    api.focusSearch((args) => {
+        document.getElementById('inputSearch').focus()
+    })
+
+    // setar o nome do cliente e habilitar o recadastramento 
+    api.namecliet((args) => {
+        let setarNomeCliente = document.getElementById('inputSearch').value.trim()
+        document.getElementById(inputNameClient).value = setarNomeCliente
+
+        document.getElementById('inputSearch').value = setarNomeCliente
+        document.getElementById('inputSearch').value = ""
+        document.getElementById('inputSearch').blur()
+        document.getElementById('inputSearch').disable = true
+        document.getElementById('inputNameClient').focus()
+        btnRead.disabled = true
+        btnCreat.disabled = false
+    })
+
+    // limpar a caixa de busca e setar o foco 
+
+    api.clearSearch((args) => {
+        document.getElementById('inputSearch').value
+        document.getElementById('inputSearch').focus()
+
+    })
+
+}
 
 
 
@@ -83,3 +145,18 @@ formCliente.addEventListener('submit', async (event) => {
 
 
 // CRUD DELET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+// Reset do formulario 
+function resetform() {
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('inputSearch').focus()
+        btnCreat.disabled = true
+        btnUpdate.disabled = true
+        btnDelete.disabled = true
+        document.getElementById('inputSearch').disable = true
+        btnRead.disabled = true
+
+
+    })
+}
