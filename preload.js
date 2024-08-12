@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld('api', {
     searchClient: (nomeCliente) => ipcRenderer.send ('search-client',nomeCliente),
     nameCliente: (args) => ipcRenderer.on ('name-client',args),
     clearSearch: (args) => ipcRenderer.on ('clear-search',args),
+    dataClient:(dadoCliente) => ipcRenderer.on('data-client',dadoCliente),
 
 })
 

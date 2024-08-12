@@ -281,15 +281,14 @@ ipcMain.on('new-client', async (event, cliente) => {
 
 // Aviso (buscar: Preenchimento  do campo obrigatorio)
 
-ipcMain.on('dialog-infoSearchDialog', (event) => {
+ipcMain.on('dialog-infoSearchClient', (event) => {
   dialog.showMessageBox({
-    type: 'warning',
-    title: 'atencao',
-    message: 'preencha o campo cliente',
-    buttons: [ok]
-
+      type: 'warning',
+      title: 'Atenção!',
+      message: 'Preencha um nome no campo de busca',
+      buttons: ['OK']
   })
-  event.reply('focus-search')
+  event.reply('focus-searchClient') //UX
 })
 
 
@@ -300,13 +299,13 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
   try {
 
     // find() "metodo de busca  new Regex "i" case insesitive"
-    const dadosdocliente = await ClientModel.find({ nomeCliente: new RegExp(nomeCliente, 'i') }) // passo 2
-    console.log(dadosdocliente) // teste do passo 2
+    const dadosCliente = await ClientModel.find({ nomeCliente: new RegExp(nomeCliente, 'i') }) // passo 2
+    console.log(dadosCliente) // teste do passo 2
 
     // ux  se o cliente nao estiver cadastrado avisar o usuario  e habilitar o cliente
 
 
-    if (dadosdocliente.length === 0) {
+    if (dadosCliente.length === 0) {
       dialog.showMessageBox({
         type:'warning',
         title:'Aviso',
@@ -327,7 +326,7 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
 
     else{
        // passo 4 (enviar os dados do clientes ao renderizador)
-        
+        event.reply('data-client',JSON.stringify(dadosCliente))
       }
 
   } catch (error) {
