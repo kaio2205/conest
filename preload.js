@@ -10,13 +10,15 @@ contextBridge.exposeInMainWorld('api', {
     openrelatorio: () => ipcRenderer.send('open-relatorio'),
     dbMessage: (message) => ipcRenderer.on('db-message',message),
     newClient: (cliente) => ipcRenderer.send('new-client',cliente),
-    newFornecedor: (fornecedor)=>ipcRenderer.send('new-Fornecedor',fornecedor),
+    newFornecedor: (fornecedor)=>ipcRenderer.send('new-fornecedor',fornecedor),
     infoSearchDialog: () => ipcRenderer('dialog-infoSearchDialog'),
-    focusSearch: (args) => ipcRenderer.on('focus-search',args),
+    focusClient: (args) => ipcRenderer.on('focus-searchClient',args),
     searchClient: (nomeCliente) => ipcRenderer.send ('search-client',nomeCliente),
-    nameCliente: (args) => ipcRenderer.on ('name-client',args),
+    nameClient: (args) => ipcRenderer.on ('set-nameClient',args),
     clearSearch: (args) => ipcRenderer.on ('clear-search',args),
     dataClient:(dadoCliente) => ipcRenderer.on('data-client',dadoCliente),
+    updateClient:(cliente) => ipcRenderer.send('update-client',cliente),
+    deleteClient: (idCli)  => ipcRenderer.send ('delet-client', idCli),
 
 })
 

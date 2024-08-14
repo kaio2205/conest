@@ -11,6 +11,7 @@ const ClientModel = require('./src/models/Cliente.js')
 const fornecedorModal = require("./src/models/Fornecedor.js")
 const { ok } = require('node:assert')
 const { ClientRequest } = require('node:http')
+const Fornecedor = require('./src/models/Fornecedor.js')
 
 let win
 const createWindow = () => {
@@ -251,6 +252,7 @@ ipcMain.on('new-client', async (event, cliente) => {
       foneCliente: cliente.foneCli,
       emailCliente: cliente.emailCli
     })
+    console.log(novoCliente)
     await novoCliente.save() //save() - moongoose
     dialog.showMessageBox({
       type: 'info',
@@ -268,6 +270,38 @@ ipcMain.on('new-client', async (event, cliente) => {
 })
 
 
+ipcMain.on('new-fornecedor', async (event, fornecedor) => {
+  console.log(fornecedor)
+  try {
+    const novoFornecedor = new fornecedorModal({
+      razaosocialFornec: fornecedor.razaoF,
+      cnpjFornec: fornecedor.cnpjF,
+      telefoneFornec: fornecedor.telefoneF,
+      emailFornec: fornecedor.emailF,
+      cepFornec: fornecedor.cepF,
+      logradouroFornec: fornecedor.logradouroF,
+      numeroFornec: fornecedor.numeroF,
+      bairroFornec: fornecedor.bairroF,
+      cidadeFornec: fornecedor.cidadeF
+    })
+
+
+    await novoFornecedor.save()
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'aviso',
+      message: "Fornecedor cadastrado com sucesso",
+      buttons: [ok]
+    })
+
+
+
+  } catch (error) {
+    console.log(error)
+  }
+
+})
+
 
 
 
@@ -277,18 +311,18 @@ ipcMain.on('new-client', async (event, cliente) => {
 
 
 
-// CRUD Read>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+// CRUD Read>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Aviso (buscar: Preenchimento  do campo obrigatorio)
 
-ipcMain.on('dialog-infoSearchClient', (event) => {
+ipcMain.on('dialog-infoSearchDialog', (event) => {
   dialog.showMessageBox({
-      type: 'warning',
-      title: 'Atenção!',
-      message: 'Preencha um nome no campo de busca',
-      buttons: ['OK']
+    type: 'warning',
+    title: 'Atenção!',
+    message: 'Preencha um nome no campo de busca',
+    buttons: ['OK']
   })
-  event.reply('focus-searchClient') //UX
+  event.reply('search-client') //UX
 })
 
 
@@ -307,27 +341,68 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
 
     if (dadosCliente.length === 0) {
       dialog.showMessageBox({
-        type:'warning',
-        title:'Aviso',
-        message:'Cliente nao cadastrado\n deseja cadastrar este cliente',
-        buttons: ['Sim','Nao'],
-        defaultId: 0
-
-      }).then((result)=>{
+        type: 'warning',
+        title: 'clientes',
+        message: 'Cliente nao cadastrado\n deseja cadastrar este cliente',
+        defaultId: 0,
+        buttons: ['Sim', 'Nao']
+      }).then((result) => {
         if (result.response === 0) {
           // setar o nome do cliente no  form  e habilitar o cliente 
-          event.reply('name-client')
-        }else{
+          event.reply('set-nameClient')
+        } else {
           event.reply('clear-search')
 
         }
       })
     }
 
-    else{
-       // passo 4 (enviar os dados do clientes ao renderizador)
-        event.reply('data-client',JSON.stringify(dadosCliente))
+    else {
+      // passo 4 (enviar os dados do clientes ao renderizador)
+      event.reply('data-client', JSON.stringify(dadosCliente))
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+
+})
+
+
+
+// CRUD Update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+ipcMain.on('update-client', async (event, cliente) => {
+  console.log(cliente)  // teste do passo 2 do slide
+
+  console.log(cliente)
+
+
+
+  try {
+    const clienteEditado = await ClientModel.findByIdAndUpdate(
+
+      cliente.idCli, {
+      nomeCliente: cliente.nomeCli,
+      foneCliente: cliente.foneCli,
+      emailCliente: cliente.emailCli
+    },
+
+      {
+        new: true
       }
+
+    )
+
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Aviso',
+      message: "Dados do cliente alterado com sucesso ",
+      buttons: ['OK'],
+
+    })
+    event.reply('reset-form')
 
   } catch (error) {
     console.log(error)
@@ -349,8 +424,54 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
 
 
 
-
 // CRUD DELET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('delete-client', (event, idCli) => {
+  console.log(idCli)
+  dialog.showMessageBox({
+    type: 'warning',
+    title: 'Atençao',
+    message: 'tem certeza que deseja excluir o cliente',
+    defaultId: 0,
+    buttons: ['Sim', 'Nao']
+
+
+  }).then(async (result) => {
+    if (result.response === 0) {
+      // setar o nome do cliente no  form  e habilitar o cliente 
+      try {
+        ClientModel.findByIdAndDelete(idCli)
+        event.reply('reset-form')
+      } catch (error) {
+        console.log(error)
+      }
+
+
+
+    }
+  })
+}
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
+
 
 
 

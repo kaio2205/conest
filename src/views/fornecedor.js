@@ -1,15 +1,5 @@
 // processso de renderizaçao  clientes 
 
-const Fornecedor = require("../models/Fornecedor")
-
-
-
-
-
-
-
-
-
 // CRUD CREAT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // captura os imputs do formulario  (passo 1 - slides)
@@ -41,7 +31,7 @@ let  cidadeFornec = document.getElementById('inputCidade')
 
 formFornec.addEventListener('submit', async (event) => {
     event.preventDefault()
-    console.log(razaosocialfornec.value, cnpjFornec.value, phoneFornec.value, emailFornec,cepFornec.value,logradouroFornec.value,numeroFornec.value,bairroFornec.value,cidadeFornec.value)
+    console.log(razaosocialfornec.value, cnpjFornec.value, phoneFornec.value, emailFornec, cepFornec.value, logradouroFornec.value, numeroFornec, bairroFornec, cidadeFornec)
     // empacotar dados em um objeto e enviar ao main.js (passo2 -slide)
     const fornecedor = {
         razaoF: razaosocialfornec.value,
