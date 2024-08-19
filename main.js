@@ -303,6 +303,21 @@ ipcMain.on('new-fornecedor', async (event, fornecedor) => {
 })
 
 
+ipcMain.on('dialog-infoSearch', (event) => {
+  dialog.showMessageBox({
+    type: 'warning',
+    title: 'Atenção!',
+    message: 'Preencha um nome no campo de busca',
+    buttons: ['OK']
+  })
+  event.reply('focus-searchClient') //UX
+})
+
+
+
+
+
+
 
 
 
@@ -315,34 +330,30 @@ ipcMain.on('new-fornecedor', async (event, fornecedor) => {
 // CRUD Read>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Aviso (buscar: Preenchimento  do campo obrigatorio)
 
-ipcMain.on('dialog-infoSearchDialog', (event) => {
+ipcMain.on('dialog-infoSearchClient', (event) => {
   dialog.showMessageBox({
     type: 'warning',
     title: 'Atenção!',
     message: 'Preencha um nome no campo de busca',
     buttons: ['OK']
   })
-  event.reply('search-client') //UX
+  event.reply('focus-searchClient') //UX
 })
 
 
 // Recebimento do pedido de busca de um cliente pelo nome 
 ipcMain.on('search-client', async (event, nomeCliente) => {
   console.log(nomeCliente)
-
   try {
-
-    // find() "metodo de busca  new Regex "i" case insesitive"
+  // find() "metodo de busca  new Regex "i" case insesitive"
     const dadosCliente = await ClientModel.find({ nomeCliente: new RegExp(nomeCliente, 'i') }) // passo 2
     console.log(dadosCliente) // teste do passo 2
 
     // ux  se o cliente nao estiver cadastrado avisar o usuario  e habilitar o cliente
-
-
     if (dadosCliente.length === 0) {
       dialog.showMessageBox({
         type: 'warning',
-        title: 'clientes',
+        title: 'Clientes',
         message: 'Cliente nao cadastrado\n deseja cadastrar este cliente',
         defaultId: 0,
         buttons: ['Sim', 'Nao']
@@ -367,6 +378,62 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
   }
 
 })
+
+
+// Fornecedor 
+
+
+ipcMain.on('dialog-infoSearchFornecedor', (event) => {
+  dialog.showMessageBox({
+    type: 'warning',
+    title: 'Atenção!',
+    message: 'Preencha um nome no campo de busca',
+    buttons: ['OK']
+  })
+  event.reply('focus-searchClient') //UX
+}) 
+
+
+
+ipcMain.on('searchFornecedor', async (event, nomeFornecedor) => {
+  console.log(nomeFornecedor)
+  try {
+  // find() "metodo de busca  new Regex "i" case insesitive"
+    const dadosFornecedor = await fornecedorModal.find({ nomeFornecedor: new RegExp(nomeFornecedor, 'i') }) // passo 2
+    console.log(dadosFornecedor) // teste do passo 2
+
+    // ux  se o cliente nao estiver cadastrado avisar o usuario  e habilitar o cliente
+    if (dadosFornecedor.length === 0) {
+      dialog.showMessageBox({
+        type: 'warning',
+        title: 'Fornecedor',
+        message: 'Fornecedor nao cadastrado\n deseja cadastrar este Fornecedor',
+        defaultId: 0,
+        buttons: ['Sim', 'Nao']
+      }).then((result) => {
+        if (result.response === 0) {
+          // setar o nome do cliente no  form  e habilitar o cliente 
+          event.reply('set-nameFornecedor')
+        } else {
+          event.reply('clear-search')
+
+        }
+      })
+    }
+
+    else {
+      // passo 4 (enviar os dados do clientes ao renderizador)
+      event.reply('data-Fornecedor', JSON.stringify(dadosFornecedor))
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+
+})
+
+
+
 
 
 
